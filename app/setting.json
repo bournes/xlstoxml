@@ -1,0 +1,23 @@
+[
+  {
+    "$$hashKey": "object:3",
+    "dir": "I:\\xiyou\\common\\data\\client",
+    "need": true,
+    "reg": "Client|Both|Lua",
+    "text": "lua"
+  },
+  {
+    "$$hashKey": "object:4",
+    "dir": "I:\\xiyou\\common\\data\\server",
+    "need": true,
+    "reg": "Server|Both|Xml",
+    "text": "xml"
+  },
+  {
+    "$$hashKey": "object:5",
+    "dir": "",
+    "need": false,
+    "reg": "Client|Both|Csv",
+    "text": "csv"
+  }
+]

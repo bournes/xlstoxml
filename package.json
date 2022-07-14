@@ -1,0 +1,27 @@
+{
+    "name": "XlsxExporter",
+    "app-name": "配置表导出工具 -WXStudio",
+    "version": "1.0.1",
+    "description": "Xlsx exporter of WX Studio",
+    "main": "app/server/main.js",
+    "repository": "",
+    "keywords": [
+        "Electron",
+        "xlsx"
+    ],
+    "author": "ADong",
+    "license": "CC0-1.0",
+    "devDependencies": {
+        "electron": "^1.4.8"
+    },
+    "dependencies": {
+        "fs-jetpack": "^0.10.5",
+        "nunjucks": "^3.2.3",
+        "xlsx": "^0.18.5"
+    },
+    "scripts": {
+        "dist-win": "rm -f *.zip && electron-packager . --platform=win32 --version=1.4.8 &&  zip -rq XlsxExporter-win32-x64.zip XlsxExporter-win32-x64 && rm -rf XlsxExporter-win32-x64",
+        "dist-mac": "m -f *.zip && electron-packager . --platform=darwin --version=1.4.8 &&  zip -rq XlsxExporter-darwin-x64.zip XlsxExporter-darwin-x64 && rm -rf XlsxExporter-darwin-x64",
+        "start": "electron ."
+    }
+}

@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--{% for item in needColumnsData %}{{ item.column }}={{ item.desc }} {% endfor %}-->
+
+<root>{% for item in rowsData %}
+    <data {% for k,v in item %}{{k}}="{{v}}" {% endfor %}/>
+{%- endfor %}
+</root>

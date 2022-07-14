@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html ng-app="myapp">
+
+<head>
+    <meta charset="UTF-8">
+    <title>配置表导出工具</title>
+    <link rel="stylesheet" href="../../libs/bootstrap/dist/css/bootstrap.css" crossorigin="anonymous">
+    <link rel="stylesheet" href="../css/app.css">
+    <link href="../css/grid.css" rel="stylesheet">
+    <script>
+        window.$ = window.jQuery = require('../../libs/jquery/dist/jquery.js')
+    </script>
+    <script src="../../libs/bootstrap/dist/js/bootstrap.js"></script>
+    <script src="../../libs/angular/angular.js"></script>
+    <script src="../render/App.js"></script>
+    <script src="../render/SettingCtrl.js"></script>
+
+</head>
+
+<body ng-controller="SettingCtrl">
+
+
+    <div class="container">
+
+
+        <div>
+            <ul class="list-group">
+                <li class="list-group-item" ng-repeat="setting in settings">
+
+                    <div class="input-group">
+                        <span class="input-group-addon">{{setting.text}}</span>
+
+                        <span class="input-group-addon">
+                <input type="checkbox" aria-label="..." ng-model="setting.need">
+              </span>
+
+                        <span class="input-group-btn">
+              <button class="btn btn-default" type="button" ng-click="changeDir(setting)">...</button>
+            </span>
+
+                        <input type="text" class="form-control" aria-label="..." ng-model="setting.dir">
+
+
+                    </div>
+
+                </li>
+            </ul>
+        </div>
+        <div style="margin-left:200px">
+            <button type="button" class="btn btn-default" ng-click="close()">取消</button>
+            <button type="button" class="btn btn-default" ng-click="save()">确定</button>
+
+        </div>
+
+
+    </div>
+
+
+
+
+</body>
+
+<script>
+    // You can also require other files to run in this process
+</script>
+
+</html>

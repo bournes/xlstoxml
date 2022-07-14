@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html ng-app="myapp">
+
+<head>
+    <meta charset="UTF-8">
+
+    <title>配置表导出工具</title>
+    <link rel="stylesheet" href="../../libs/bootstrap/dist/css/bootstrap.css" crossorigin="anonymous">
+    <link rel="stylesheet" href="../css/app.css">
+    <link href="../css/grid.css" rel="stylesheet">
+    <script>
+        window.$ = window.jQuery = require('../../libs/jquery/dist/jquery.js')
+    </script>
+    <script src="../../libs/bootstrap/dist/js/bootstrap.js"></script>
+    <script src="../../libs/angular/angular.js"></script>
+    <script src="../render/App.js"></script>
+    <script src="../render/XlsCtrl.js"></script>
+
+</head>
+
+<body ng-controller="XlsCtrl">
+
+    <div class="container">
+
+        <div class=" alert-info" role="alert">
+            <button type="button" class="btn btn-default" ng-click="openSetting()">输出设置...</button> {{status}}
+        </div>
+    </div>
+
+    <br/>
+    <div class="container">
+
+        <div id="holder" style="height:400px;over-flow:auto">
+            <ul class="list-group">
+                <li class="list-group-item" ng-repeat="job in jobs">
+
+                    <span class="glyphicon glyphicon-time " aria-hidden="true" ng-if="job.status == 'wait' ">{{job.filename}}</span>
+                    <span class="glyphicon glyphicon-ok " aria-hidden="true" ng-if="job.status == 'ok' ">{{job.filename}}</span>
+                    <span class="glyphicon glyphicon-remove " aria-hidden="true" ng-if="job.status == 'error' ">{{job.filename}}</span>
+                    <div ng-if="job.status == 'ok'" class="alert-success">
+                        <div ng-repeat="o in job.outputs">{{o}}
+                        </div>
+                    </div>
+                    <div ng-if="job.status == 'error'" class="alert-danger">
+                        {{job.error}}
+                    </div>
+                </li>
+            </ul>
+
+        </div>
+
+    </div>
+
+
+
+
+</body>
+
+
+</html>

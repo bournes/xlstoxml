@@ -1,0 +1,100 @@
+---@classdef {{ record_name }}
+local {{ record_name }} = {}
+
+{% for item in needColumnsData %}
+{{ record_name}}.{{item.column}} = {%if item.type == "int" %}0{% else %} ""{% endif %}--{{ item.desc }}
+{%- endfor %}
+
+local {{ class_name }} = {
+   _data = { {% for row in rowsData %}  
+    [{{loop.index}}] = { {%- for k,v in row %}{{ v }},{% endfor -%} },
+            {%- endfor %}
+    }
+}
+
+local __index_{{ indexOfColumns | join("_") }} = { {% for k, v in indexData %}  
+    [{% if indexType == "string"  %}"{% endif %}{{ k}}{% if indexType == "string"  %}"{% endif %}] = {{v+1}},
+{%- endfor %}
+}
+
+local __key_map = { {% for item in needColumnsData %}
+    {{item.column}} = {{ loop.index }},
+{%- endfor %}
+}
+
+local m = { 
+    __index = function(t, k) 
+        if k == "toObject" then
+            return function()  
+                local o = {}
+                for key, v in pairs (__key_map) do 
+                    o[key] = t._raw[v]
+                end
+                return o
+            end 
+        end
+        
+        assert(__key_map[k], "cannot find " .. k .. " in {{ record_name }}")
+
+        return t._raw[__key_map[k]]
+    end
+}
+
+
+function {{ class_name }}.getLength()
+    return #{{ class_name }}._data
+end
+
+
+
+function {{ class_name }}.hasKey(k)
+  if __key_map[k] == nil then
+    return false
+  else
+    return true
+  end
+end
+
+
+---
+--@return @class {{ record_name }}
+function {{ class_name }}.indexOf(index)
+    if index == nil or not {{ class_name }}._data[index] then
+        return nil
+    end
+    return setmetatable({_raw = {{ class_name }}._data[index]}, m)
+end
+
+
+
+---
+--@return @class {{ record_name }}
+function {{ class_name }}.get({{ indexOfColumns | join(",") }})
+    {% if indexOfColumns.length == 1 %}
+    return {{ class_name }}.indexOf(__index_{{ indexOfColumns | join("_") }}[ {{ indexOfColumns | join(",") }} ])
+    {% else %}
+    local k = {{ indexOfColumns | join(" .. \'_\' .. ") }}
+    return {{ class_name }}.indexOf(__index_{{ indexOfColumns | join("_") }}[k])
+    {% endif %} 
+end
+
+
+
+function {{ class_name }}.set({{ indexOfColumns | join(",") }}, key, value)
+    local record = {{ class_name }}.get({{ indexOfColumns | join(",") }})
+    if record then
+        local keyIndex = __key_map[key]
+        if keyIndex then
+            record._raw[keyIndex] = value
+        end
+    end
+end
+
+
+
+
+function {{ class_name }}.get_index_data()
+    return __index_{{ indexOfColumns | join("_") }} 
+end
+
+return  {{ class_name }} 

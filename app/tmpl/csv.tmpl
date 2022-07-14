@@ -1,0 +1,3 @@
+﻿{% for item in needColumnsData %}{{ item.column }},{% endfor %}{% for item in rowsData %}
+{{item | join(",")}}
+{%- endfor %}
